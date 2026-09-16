@@ -141,9 +141,13 @@ ul{list-style:none;}
 .nav-links > li{position:relative;}
 .nav-links a.top-link,.nav-links button.top-link{
   font-size:0.83rem;letter-spacing:0.06em;text-transform:uppercase;
-  font-weight:500;color:var(--ink);
+  font-weight:700;color:var(--ink);
   padding:8px 2px;position:relative;
   font-family:inherit;line-height:normal;
+}
+.site-nav:not(.scrolled) .nav-links a.top-link,
+.site-nav:not(.scrolled) .nav-links button.top-link{
+  text-shadow:0 0 8px rgba(255,255,255,0.75),0 0 2px rgba(255,255,255,0.9);
 }
 .nav-links a.top-link::after,.nav-links button.top-link::after{
   content:'';position:absolute;left:0;bottom:0;width:0;height:1px;
@@ -287,12 +291,12 @@ section{padding:clamp(70px,11vw,120px) 0;}
   background:transparent;cursor:pointer;transition:all .3s ease;
 }
 .tab-btn.active,.tab-btn:hover{background:var(--brass);border-color:var(--brass);color:var(--forest-deep);}
-.tab-panel{display:none;}
+.tab-panel{display:none;scroll-margin-top:110px;}
 .tab-panel.active{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
 .space-card{position:relative;overflow:hidden;height:340px;cursor:default;}
 .space-card img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease;}
 .space-card:hover img{transform:scale(1.08);}
-.space-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(23,48,42,0.88) 100%);}
+.space-card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(23,48,42,0.88) 100%);pointer-events:none;}
 .space-label{position:absolute;left:22px;bottom:20px;z-index:2;}
 .space-label span{font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:4px;}
 .space-label h3{color:var(--cream-soft);font-size:1.3rem;}
@@ -665,10 +669,10 @@ footer strong{color:var(--cream-soft);}
       <span class="eyebrow" style="color:var(--brass)">Contact</span>
       <h2>Plan Your Stay</h2>
       <p>Send us your dates and we'll help you put together the right room and the right pace for your visit.</p>
-      <div class="info-row">
+      <a class="info-row" href="https://www.google.com/maps/dir//Raunaq,+a+boutique+Farmstay,+Hoshiarpur,+Dalewal,+Punjab+146110/@31.9746904,75.628544,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x391ae139f7d1313f:0xab21f7c15bb33dae!2m2!1d76.0205354!2d31.5234963?entry=ttu&amp;g_ep=EgoyMDI2MDkxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>Location</strong><span>Hoshiarpur, Punjab, India</span></div>
-      </div>
+      </a>
       <div class="info-row">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.7 2Z"/></svg>
         <div><strong>Phone</strong><span>+91 9811577845</span></div>
@@ -678,12 +682,13 @@ footer strong{color:var(--cream-soft);}
         <div><strong>Email</strong><span>info@raunaqhomestay.com</span></div>
       </div>
     </div>
-    <form class="contact-form" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Sent — We\'ll Be in Touch'; this.querySelector('.btn').style.opacity=0.7;">
-      <input type="text" placeholder="Full Name" required>
-      <input type="tel" placeholder="Phone Number" required>
-      <input type="date" placeholder="Check-in Date">
-      <textarea rows="3" placeholder="Tell us about your stay..."></textarea>
+    <form class="contact-form" id="enquiryForm">
+      <input type="text" name="Full Name" placeholder="Full Name" required>
+      <input type="tel" name="Phone Number" placeholder="Phone Number" required>
+      <input type="date" name="Check-in Date" placeholder="Check-in Date">
+      <textarea name="Message" rows="3" placeholder="Tell us about your stay..."></textarea>
       <button type="submit" class="btn btn-solid">Send Enquiry</button>
+      <p id="enquiryStatus" style="margin-top:12px;font-size:0.86rem;color:var(--ink-soft);display:none;"></p>
     </form>
   </div>
 </section>
@@ -754,7 +759,9 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
     btn.classList.add('active');
-    document.getElementById(btn.dataset.target).classList.add('active');
+    const panel = document.getElementById(btn.dataset.target);
+    panel.classList.add('active');
+    panel.scrollIntoView({ behavior:'smooth', block:'start' });
   });
 });
 
@@ -810,6 +817,44 @@ document.querySelectorAll('.lightbox-trigger').forEach(img=>{
 document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
 lbOverlay.addEventListener('click', (e)=>{ if(e.target === lbOverlay) closeLightbox(); });
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeLightbox(); });
+
+// Enquiry form — sends the submission by email to lavneetgyani@gmail.com
+const enquiryForm = document.getElementById('enquiryForm');
+const enquiryStatus = document.getElementById('enquiryStatus');
+enquiryForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const btn = enquiryForm.querySelector('.btn');
+  const originalText = btn.textContent;
+  btn.textContent = 'Sending…';
+  btn.style.opacity = 0.7;
+  enquiryStatus.style.display = 'none';
+
+  const payload = {
+    "Full Name": enquiryForm["Full Name"].value,
+    "Phone Number": enquiryForm["Phone Number"].value,
+    "Check-in Date": enquiryForm["Check-in Date"].value,
+    "Message": enquiryForm["Message"].value,
+    "_subject": "New Stay Enquiry — Raunaq Homestay",
+    "_captcha": "false"
+  };
+
+  fetch('https://formsubmit.co/ajax/lavneetgyani@gmail.com', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(() => {
+    btn.textContent = "Sent — We'll Be in Touch";
+    enquiryForm.reset();
+  })
+  .catch(() => {
+    btn.textContent = originalText;
+    btn.style.opacity = 1;
+    enquiryStatus.textContent = "Something went wrong sending your enquiry — please call or WhatsApp us at +91 9811577845 instead.";
+    enquiryStatus.style.display = 'block';
+  });
+});
 </script>
 </body>
 </html>
