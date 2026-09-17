@@ -503,6 +503,7 @@ footer strong{color:var(--cream-soft);}
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important;}
 }
+
 </style>
 </head>
 <body>
@@ -665,7 +666,7 @@ footer strong{color:var(--cream-soft);}
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Things To Do</span>
-      <p>The best thing to do at Raunaq is to do nothing at all; relax and soak in the crisp fresh air amidst our lovely plantation. Or use it as a base to explore the Nara forest around it — from the pool deck and bonfire evenings on the property, to the dam, the dairy, and day trips further out.</p>
+      <p>The best thing to do at Raunaq is to do nothing at all; relax and soak in the crisp fresh air amidst our lovely plantation. Or use it as a base to explore the Nara forest around it — from the pool deck and bonfire evenings at the property, to the dam, the dairy, and day trips further out.</p>
     </div>
 <section id="ttd-details" class="alt-bg">
   <div class="wrap">
@@ -805,7 +806,7 @@ footer strong{color:var(--cream-soft);}
     <div class="contact-info">
       <span class="eyebrow" style="color:var(--brass)">Contact</span>
       <h2>Plan Your Stay</h2>
-      <p>Send us your dates and we'll help you put together the right room and the right pace for your visit.</p>
+      <p></p>
       <a class="info-row" href="https://www.google.com/maps/dir//Raunaq,+a+boutique+Farmstay,+Hoshiarpur,+Dalewal,+Punjab+146110/@31.9746904,75.628544,15z/data=!4m8!4m7!1m0!1m5!1m1!1s0x391ae139f7d1313f:0xab21f7c15bb33dae!2m2!1d76.0205354!2d31.5234963?entry=ttu&amp;g_ep=EgoyMDI2MDkxMy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">
         <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
         <div><strong>Location</strong><span>Hoshiarpur, Punjab, India</span></div>
@@ -820,10 +821,10 @@ footer strong{color:var(--cream-soft);}
       </div>
     </div>
     <form class="contact-form" id="enquiryForm">
-      <input type="text" name="Full Name" placeholder="Full Name" required>
+      <input type="text" name="Full Name" placeholder="Name" required>
       <input type="tel" name="Phone Number" placeholder="Phone Number" required>
-      <input type="date" name="Check-in Date" placeholder="Check-in Date">
-      <textarea name="Message" rows="3" placeholder="Tell us about your stay..."></textarea>
+      <input type="text" name="Check-in Date" placeholder="Booking Date" aria-label="Booking Date">
+      <textarea name="Message" rows="3" placeholder="Your Enquiry in few words..."></textarea>
       <button type="submit" class="btn btn-solid">Send Enquiry</button>
       <p id="enquiryStatus" style="margin-top:12px;font-size:0.86rem;color:var(--ink-soft);display:none;"></p>
     </form>
@@ -1021,6 +1022,7 @@ enquiryForm.addEventListener('submit', function(e){
     enquiryStatus.style.display = 'block';
   });
 });
+
 </script>
 </body>
 </html>
