@@ -8,7 +8,7 @@
 // shown — no flash, because the flag is set before the popup markup is
 // even parsed.
 try{
-  if(localStorage.getItem('raunaqWelcomeShown_v3')){
+  if(localStorage.getItem('raunaqWelcomeShown_v4')){
     document.documentElement.classList.add('welcome-seen');
   }
 }catch(e){}
@@ -824,7 +824,7 @@ footer strong{color:var(--cream-soft);}
       <input type="text" name="Full Name" placeholder="Name" required>
       <input type="tel" name="Phone Number" placeholder="Phone Number" required>
       <input type="text" name="Check-in Date" placeholder="Booking Date" aria-label="Booking Date">
-      <textarea name="Message" rows="3" placeholder="Your Enquiry in few words..."></textarea>
+      <textarea name="Message" rows="3" placeholder="Your Enquiry in a few words..."></textarea>
       <button type="submit" class="btn btn-solid">Send Enquiry</button>
       <p id="enquiryStatus" style="margin-top:12px;font-size:0.86rem;color:var(--ink-soft);display:none;"></p>
     </form>
@@ -864,7 +864,7 @@ document.querySelectorAll('.nav-links a.top-link').forEach(a=>{
 const overlay = document.getElementById('welcomeOverlay');
 function closeWelcome(){
   overlay.classList.add('hidden');
-  try{ localStorage.setItem('raunaqWelcomeShown_v3','1'); }catch(e){}
+  try{ localStorage.setItem('raunaqWelcomeShown_v4','1'); }catch(e){}
 }
 const closeBtn = document.getElementById('welcomeClose');
 closeBtn.addEventListener('click', closeWelcome);
