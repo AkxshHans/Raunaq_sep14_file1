@@ -8,8 +8,13 @@
 // shown — no flash, because the flag is set before the popup markup is
 // even parsed.
 try{
-  if(localStorage.getItem('raunaqWelcomeShown_v4')){
+  // The saved value is the time the popup was closed; it stays hidden for
+  // 24 hours from then, after which it is allowed to appear again.
+  var welcomeClosedAt = parseInt(localStorage.getItem('raunaqWelcomeShown_v4'), 10);
+  if(welcomeClosedAt && (Date.now() - welcomeClosedAt) < 24*60*60*1000){
     document.documentElement.classList.add('welcome-seen');
+  }else{
+    localStorage.removeItem('raunaqWelcomeShown_v4');
   }
 }catch(e){}
 </script>
@@ -864,7 +869,7 @@ document.querySelectorAll('.nav-links a.top-link').forEach(a=>{
 const overlay = document.getElementById('welcomeOverlay');
 function closeWelcome(){
   overlay.classList.add('hidden');
-  try{ localStorage.setItem('raunaqWelcomeShown_v4','1'); }catch(e){}
+  try{ localStorage.setItem('raunaqWelcomeShown_v4', String(Date.now())); }catch(e){}
 }
 const closeBtn = document.getElementById('welcomeClose');
 closeBtn.addEventListener('click', closeWelcome);
